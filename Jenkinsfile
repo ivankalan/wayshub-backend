@@ -11,6 +11,19 @@ pipeline {
     agent any
 
     stages {
+        stage('Generate Remote') {
+            steps {
+                sshagent([credential]){
+                    sh """ssh -o StrictHostKeyChecking=no ${server} << EOF
+                        echo "Generating git remote"
+                        cd ${dir}
+                        git config --global user.name ivankalan
+			git config --global user.email ivankalanv2.1@gmail.com
+                        exit
+                    EOF"""
+                }
+            }
+        }
         stage('Repository Pull') {
             steps {
                 sshagent([credential]){
