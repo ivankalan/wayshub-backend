@@ -3,7 +3,7 @@ def rname = "origin"
 def dir = "~/wayshub-backend/"
 def credential = 'appserver'
 def server = 'kel2@103.183.74.32'
-def img = 'ivankalan12/wayshub-be:latest'
+def img = 'ivankalan12/wayshub-be'
 def cont = 'wayshub-be'
 
 
