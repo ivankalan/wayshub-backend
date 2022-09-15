@@ -19,6 +19,7 @@ pipeline {
                         cd ${dir}
                         git config --global user.name ivankalan
 			git config --global user.email ivankalanv2.1@gmail.com
+			ssh -T git@github.com
                         exit
                     EOF"""
                 }
