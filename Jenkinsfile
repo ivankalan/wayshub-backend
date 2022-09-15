@@ -5,7 +5,6 @@ def credential = 'appserver'
 def server = 'kel2@103.183.74.32'
 def img = 'ivankalan12/wayshub-be'
 def cont = 'wayshub-be'
-def contdb = 'kel2_database_1'
 
 
 pipeline {
@@ -18,8 +17,7 @@ pipeline {
                     sh """ssh -o StrictHostKeyChecking=no ${server} << EOF
                         echo "Pulling Wayshub Backend Repository"
                         cd ${dir}
-			docker container stop ${contdb}
-			docker container run ${contdb}
+			docker-compose up -d
                         docker container stop ${cont}
                         git pull ${rname} ${branch}
                         exit
