@@ -7,14 +7,7 @@ def img = 'ivankalan12/wayshub-be'
 def cont = 'wayshub-be'
 
 discordSend title: 'env.JOB_NAME',
-	    description: "**Build:** ${env.BUILD_NUMBER}\n**Status:** ${result}\n\u2060",
-	    footer: '', 
-	    image: '', 
-	    link: 'env.BUILD_URL',
-	    result: 'SUCCESS|UNSTABLE|FAILURE|ABORTED',
-	    scmWebUrl: '',
-	    thumbnail: '',
-	    webhookURL: 'https://discord.com/api/webhooks/1019867961349132379/f5XTPLZWgUBN3-QZ0E-OkFQPXOJrGdj0LOjHMsQA8jfYC9mL5W1bt60mc_UbpLi88ceM'
+	    description: "**Build:** ${env.BUILD_NUMBER}\n**Status:** ${result}\n\n", footer: '', image: '', link: 'env.BUILD_URL', result: 'SUCCESS|UNSTABLE|FAILURE|ABORTED', scmWebUrl: '', thumbnail: '', webhookURL: 'https://discord.com/api/webhooks/1019867961349132379/f5XTPLZWgUBN3-QZ0E-OkFQPXOJrGdj0LOjHMsQA8jfYC9mL5W1bt60mc_UbpLi88ceM'
 
 pipeline {
     agent any
