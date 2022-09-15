@@ -19,6 +19,7 @@ pipeline {
                         echo "Pulling Wayshub Backend Repository"
                         cd ${dir}
 			docker container stop ${contdb}
+			docker container run ${contdb}
                         docker container stop ${cont}
                         git pull ${rname} ${branch}
                         exit
