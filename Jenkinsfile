@@ -9,7 +9,7 @@ def cont = 'wayshub-be'
 
 pipeline {
     agent any
-    discordSend description: 'CI/CD Jenkins for wayshub-backend', footer: 'Kelompok 2 - Dumbways.id Devops Batch 13', image: '', link: 'env.BUILD_URL', result: 'SUCCESS|UNSTABLE|FAILURE|ABORTED', scmWebUrl: '', thumbnail: '', title: 'Wayshub-backend', webhookURL: 'https://discord.com/api/webhooks/1019867961349132379/f5XTPLZWgUBN3-QZ0E-OkFQPXOJrGdj0LOjHMsQA8jfYC9mL5W1bt60mc_UbpLi88ceM'
+
     stages {
         stage('Repository Pull') {
             steps {
