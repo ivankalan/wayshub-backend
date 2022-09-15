@@ -32,6 +32,7 @@ pipeline {
                         echo "Building Image"
                         cd ${dir}
                         docker build -t ${img}:${env.BUILD_ID} .
+			exit
                     EOF"""
                 }
             }
@@ -45,6 +46,7 @@ pipeline {
                         docker tag ${img}:${env.BUILD_ID} ${img}:${env.BUILD_ID}-latest
 			docker container run ${contdb}
                         docker container run ${cont}
+			exit
                     EOF"""
                 }
             }
@@ -56,6 +58,7 @@ pipeline {
                     sh """ssh -o StrictHostKeyChecking=no ${server} << EOF
                         cd ${dir}
                         docker image push ${img}:${env.BUILD_ID}-latest
+			exit
                     EOF"""
                 }
             }
