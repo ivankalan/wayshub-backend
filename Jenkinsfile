@@ -6,7 +6,6 @@ def server = 'kel2@103.183.74.32'
 def img = 'ivankalan12/wayshub-be'
 def cont = 'wayshub-be'
 
-
 pipeline {
     agent any
 
@@ -15,10 +14,12 @@ pipeline {
             steps {
                 sshagent([credential]){
                     sh """ssh -o StrictHostKeyChecking=no ${server} << EOF
-                    echo "Pulling Wayshub Backend Repository"
+                    BUILD=${env.BUILD_ID}-1
+		    echo "Pulling Wayshub Backend Repository"
                     cd ${dir}
                     docker container stop ${cont}
-                    git pull ${rname} ${branch}
+                    docker container rm ${img}:$BUILD-latest
+		    git pull ${rname} ${branch}
                     exit
                     EOF"""
                 }
@@ -65,7 +66,7 @@ pipeline {
 	stage('Push Notification Discord') {
 	   steps {
                 sshagent([credential]){
-		    discordSend description: "CI/CD Jenkins for wayshub-backend", footer: "Kelompok 2 - Dumbways.id Devops Batch 13", link: env.BUILD_URL, result: currentBuild.currentResult, scmWebUrl: '', title: 'Wayshub-backend', webhookURL: 'https://discord.com/api/webhooks/1019867961349132379/f5XTPLZWgUBN3-QZ0E-OkFQPXOJrGdj0LOjHMsQA8jfYC9mL5W1bt60mc_UbpLi88ceM'
+		    discordSend description: "wayshub-backend:"'env.BUILD_ID', footer: "Kelompok 2 - Dumbways.id Devops Batch 13", link: env.BUILD_URL, result: currentBuild.currentResult, scmWebUrl: '', title: 'Wayshub-backend', webhookURL: 'https://discord.com/api/webhooks/1019867961349132379/f5XTPLZWgUBN3-QZ0E-OkFQPXOJrGdj0LOjHMsQA8jfYC9mL5W1bt60mc_UbpLi88ceM'
 		}
 	    }	
 	}
