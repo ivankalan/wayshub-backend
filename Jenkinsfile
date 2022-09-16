@@ -65,7 +65,7 @@ pipeline {
 	stage('Push Notification Discord') {
 	   steps {
                 sshagent([credential]){
-		    discordSend description: 'CI/CD Jenkins for wayshub-backend', footer: 'Kelompok 2 - Dumbways.id Devops Batch 13', link: 'env.BUILD_URL', result: 'SUCCESS|UNSTABLE|FAILURE|ABORTED', scmWebUrl: '', title: 'Wayshub-backend', webhookURL: 'https://discord.com/api/webhooks/1019867961349132379/f5XTPLZWgUBN3-QZ0E-OkFQPXOJrGdj0LOjHMsQA8jfYC9mL5W1bt60mc_UbpLi88ceM'
+		    discordSend description: "CI/CD Jenkins for wayshub-backend", footer: "Kelompok 2 - Dumbways.id Devops Batch 13", link: env.BUILD_URL, result: currentBuild.currentResult, scmWebUrl: '', title: 'Wayshub-backend', webhookURL: 'https://discord.com/api/webhooks/1019867961349132379/f5XTPLZWgUBN3-QZ0E-OkFQPXOJrGdj0LOjHMsQA8jfYC9mL5W1bt60mc_UbpLi88ceM'
 		}
 	    }	
 	}
