@@ -13,16 +13,15 @@ pipeline {
         stage('Repository Pull') {
 	    environment {
                 BUILDE = "${env.BUILD_ID}"
-                BUILD = ''
             }
             steps {
                 sshagent([credential]){
                     sh """ssh -o StrictHostKeyChecking=no ${server} << EOF
-                    $BUILD=$BUILDE-1
+                    build=$BUILDE-1
 		    echo "Pulling Wayshub Backend Repository"
                     cd ${dir}
                     docker container stop ${cont}
-                    docker container rm ${img}:$BUILD-latest
+                    docker container rm ${img}:$build-latest
 		    git pull ${rname} ${branch}
                     exit
                     EOF"""
