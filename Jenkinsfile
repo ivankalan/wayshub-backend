@@ -17,7 +17,7 @@ pipeline {
             steps {
                 sshagent([credential]){
                     sh """ssh -o StrictHostKeyChecking=no ${server} << EOF
-                    $BUILD--
+                    $BUILD=$BUILD-1
 		    echo "Pulling Wayshub Backend Repository"
                     cd ${dir}
                     docker container stop ${cont}
