@@ -15,11 +15,11 @@ pipeline {
             steps {
                 sshagent([credential]){
                     sh """ssh -o StrictHostKeyChecking=no ${server} << EOF
-                        echo "Pulling Wayshub Backend Repository"
-                        cd ${dir}
-                        docker container stop ${cont}
-                        git pull ${rname} ${branch}
-                        exit
+                    echo "Pulling Wayshub Backend Repository"
+                    cd ${dir}
+                    docker container stop ${cont}
+                    git pull ${rname} ${branch}
+                    exit
                     EOF"""
                 }
             }
@@ -29,10 +29,10 @@ pipeline {
             steps {
                 sshagent([credential]){
                     sh """ssh -o StrictHostKeyChecking=no ${server} << EOF
-                        echo "Building Image"
-                        cd ${dir}
-                        docker build -t ${img}:${env.BUILD_ID} .
-			exit
+                    echo "Building Image"
+                    cd ${dir}
+                    docker build -t ${img}:${env.BUILD_ID} .
+		    exit
                     EOF"""
                 }
             }
@@ -42,10 +42,10 @@ pipeline {
             steps {
                 sshagent([credential]){
                     sh """ssh -o StrictHostKeyChecking=no ${server} << EOF
-                        cd ${dir}
-                        docker tag ${img}:${env.BUILD_ID} ${img}:${env.BUILD_ID}-latest
-                        docker container run -d ${cont}
-			exit
+                    cd ${dir}
+                    docker tag ${img}:${env.BUILD_ID} ${img}:${env.BUILD_ID}-latest
+                    docker container run -d ${cont}
+		    exit
                     EOF"""
                 }
             }
@@ -55,12 +55,17 @@ pipeline {
             steps {
                 sshagent([credential]){
                     sh """ssh -o StrictHostKeyChecking=no ${server} << EOF
-                        cd ${dir}
-                        docker image push ${img}:${env.BUILD_ID}-latest
-			exit
+                    cd ${dir}
+                    docker image push ${img}:${env.BUILD_ID}-latest
+		    exit
                     EOF"""
                 }
             }
         }
+	stage('Push Notification Discord') {
+	   steps {
+                sshagent([credential]){
+		    discordSend description: 'CI/CD Jenkins for wayshub-backend', footer: 'Kelompok 2 - Dumbways.id Devops Batch 13', link: 'env.BUILD_URL', result: 'SUCCESS|UNSTABLE|FAILURE|ABORTED', scmWebUrl: '', title: 'Wayshub-backend', webhookURL: 'https://discord.com/api/webhooks/1019867961349132379/f5XTPLZWgUBN3-QZ0E-OkFQPXOJrGdj0LOjHMsQA8jfYC9mL5W1bt60mc_UbpLi88ceM'
+	}
     }
 }
