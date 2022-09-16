@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('Repository Pull') {
 	    environment {
-                BUILD = ${env.BUILD_ID}
+                BUILD = "${env.BUILD_ID}"
             }
             steps {
                 sshagent([credential]){
